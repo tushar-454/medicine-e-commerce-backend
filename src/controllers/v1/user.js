@@ -119,6 +119,20 @@ const superAdminUpdateUserByEmail = async (req, res, next) => {
   return null;
 };
 
+const superAdmindeleteUserByEmail = async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOneAndDelete({ email });
+    if (!user) {
+      return res.status(404).json({ status: 404, error: 'User not found' });
+    }
+    return res.status(204).json({ status: 204, message: 'User deleted' });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
 // _____________________________________________________________________________
 /**
  * admin controller
@@ -141,4 +155,5 @@ module.exports = {
   deleteUserByEmail,
   superAdminUpdateUserByEmail,
   getAdminAllUsers,
+  superAdmindeleteUserByEmail,
 };
