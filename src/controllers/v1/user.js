@@ -23,7 +23,10 @@ const createNewUser = async (req, res, next) => {
         error: 'Verification Code send your mail, verify now.',
       });
     }
-
+    const userExists = await getUserByProperty('email', email, 'User');
+    if (userExists) {
+      return res.status(409).json({ status: 409, message: 'User already exists' });
+    }
     // now create a user if email is verified
     await createUser({ name, email, password, photo });
     res.status(201).json({
