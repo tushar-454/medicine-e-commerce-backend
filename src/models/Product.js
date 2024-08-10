@@ -20,7 +20,11 @@ const productSchema = Schema({
   },
   variants: [
     {
-      name: {
+      dose: {
+        type: String,
+        required: true,
+      },
+      package_size: {
         type: String,
         required: true,
       },
