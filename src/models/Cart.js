@@ -16,19 +16,6 @@ const cartSchema = Schema({
     required: true,
   },
   varient: {
-    type: {
-      name: {
-        type: String,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-    },
-    required: true,
-  },
-  total: {
     type: Number,
     required: true,
   },

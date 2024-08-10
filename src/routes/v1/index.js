@@ -7,6 +7,7 @@ const adminRoutes = require('./admin');
 const categoryRoutes = require('./category');
 const authRoutes = require('./auth');
 const productRoutes = require('./product');
+const cartRoutes = require('./cart');
 
 router.use('/api/v1/user', userRoutes);
 router.use('/api/v1/email', emailRoutes);
@@ -16,5 +17,6 @@ router.use('/api/v1/admin', adminRoutes);
 router.use('/api/v1/category', categoryRoutes);
 router.use('/api/v1/auth', authRoutes);
 router.use('/api/v1/product', productRoutes);
+router.use('/api/v1/cart', cartRoutes);
 
 module.exports = router;
