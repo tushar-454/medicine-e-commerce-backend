@@ -39,4 +39,20 @@ const createNewUser = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createNewUser };
+const getUserByEmail = async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const user = await getUserByProperty('email', email, 'User');
+    if (!user) {
+      return res.status(404).json({ status: 404, error: 'User not found' });
+    }
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+    return res.status(200).json({ status: 200, user: userWithoutPassword });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { createNewUser, getUserByEmail };
