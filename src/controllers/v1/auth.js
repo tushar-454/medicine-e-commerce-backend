@@ -23,13 +23,13 @@ const loginUser = async (req, res, next) => {
 
 const createToken = async (req, res, next) => {
   try {
-    const { email } = req.body;
+    const { email, role } = req.body;
     const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_ACCESS_EXPIRATION,
+      expiresIn: parseInt(process.env.JWT_ACCESS_EXPIRATION, 10),
     });
 
-    const refreshToken = jwt.sign({ email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_REFRESH_EXPIRATION,
+    const refreshToken = jwt.sign({ email, role }, process.env.JWT_SECRET, {
+      expiresIn: parseInt(process.env.JWT_REFRESH_EXPIRATION, 10),
     });
 
     res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'none' });
