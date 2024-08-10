@@ -21,4 +21,17 @@ const createOrder = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createOrder };
+const getOrders = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const orders = await Order.find({ user: userId })
+      .populate('user', 'name photo email')
+      .populate('products.product', 'name photo');
+    return res.status(200).json({ status: 200, message: 'Orders retrieved successfully', orders });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { createOrder, getOrders };
