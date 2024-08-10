@@ -18,7 +18,11 @@ const orderSchema = Schema({
         required: true,
       },
       varient: {
-        name: {
+        dose: {
+          type: String,
+          required: true,
+        },
+        package_size: {
           type: String,
           required: true,
         },
@@ -42,6 +46,28 @@ const orderSchema = Schema({
     enum: ['cash', 'card', 'bKash', 'rocket'],
     required: true,
   },
+  shippingInfo: {
+    division: {
+      type: String,
+      required: true,
+    },
+    district: {
+      type: String,
+      required: true,
+    },
+    upazila: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+  },
+  Phone: {
+    type: String,
+    required: true,
+  },
   paymentStatus: {
     type: String,
     enum: ['paid', 'unpaid', 'pending'],
@@ -51,30 +77,6 @@ const orderSchema = Schema({
     type: String,
     enum: ['pending', 'processing', 'shipped', 'delivered'],
     default: 'pending',
-  },
-  shippingAddress: {
-    type: String,
-    required: true,
-  },
-  shippingDivision: {
-    type: String,
-    required: true,
-  },
-  shippingDistrict: {
-    type: String,
-    required: true,
-  },
-  shippingUpazila: {
-    type: String,
-    required: true,
-  },
-  shippingPhone: {
-    type: String,
-    required: true,
-  },
-  shippingEmail: {
-    type: String,
-    required: true,
   },
   isPaid: {
     type: Boolean,
@@ -93,10 +95,6 @@ const orderSchema = Schema({
     default: false,
   },
   isReturned: {
-    type: Boolean,
-    default: false,
-  },
-  isExchange: {
     type: Boolean,
     default: false,
   },
