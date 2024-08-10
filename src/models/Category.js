@@ -19,12 +19,6 @@ const categorySchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category',
   },
-  ancestors: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Category',
-    },
-  ],
   isRoot: {
     type: Boolean,
     default: false,

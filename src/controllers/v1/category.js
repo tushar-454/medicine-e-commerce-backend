@@ -8,13 +8,13 @@ const createCategory = async (req, res, next) => {
     // Create a new category document
     const newCategory = new Category({
       name,
-      slug,
+      slug: slug.toLowerCase(),
       photo,
       parent,
       ancestors,
       isRoot,
       isLeaf,
-      isDeleted: false, // Default value
+      isDeleted: false,
     });
 
     // Save the category to the database
