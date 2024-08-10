@@ -11,6 +11,7 @@ const globalError = require('./src/utils/globalError');
 const routes = require('./src/routes/v1');
 const logger = require('./src/middleware/logger');
 
+app.use('/public', express.static('public'));
 app.use(
   cors({
     origin: 'http://localhost:5173',

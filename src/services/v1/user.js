@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const EmailVerifyUser = require('../../models/EmailVerifyUser');
 const User = require('../../models/User');
 // common services for user
@@ -22,8 +23,10 @@ const getUserByProperty = async (property, value, collection) => {
  */
 
 const createUser = async ({ name, email, password, photo }) => {
-  const user = await User.create({ name, email, password, photo });
-  return user.save();
+  bcrypt.hash(password, 10).then(async (hash) => {
+    const newUser = await User.create({ name, email, password: hash, photo });
+    return newUser.save();
+  });
 };
 
 module.exports = { getUserByProperty, createUser };
