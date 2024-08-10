@@ -14,7 +14,8 @@
     "no-console": "off",
     "func-names": "off",
     "no-process-exit": "off",
-    "object-shorthand": "warn"
+    "object-shorthand": "warn",
+    "object-curly-newline": "off"
   },
   "plugins": ["prettier"]
 }

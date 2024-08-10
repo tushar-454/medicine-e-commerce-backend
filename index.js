@@ -8,6 +8,7 @@ const port = process.env.PORT || 4000;
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const globalError = require('./src/utils/globalError');
+const routes = require('./src/routes/v1');
 const logger = require('./src/middleware/logger');
 
 app.use(
@@ -20,6 +21,7 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(logger);
+app.use(routes);
 app.use(globalError);
 
 app.get('/', (_req, res) => {
