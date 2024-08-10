@@ -17,7 +17,8 @@
     "object-shorthand": "warn",
     "object-curly-newline": "off",
     "no-extraneous-dependencies": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "no-underscore-dangle": "off"
   },
   "plugins": ["prettier"]
 }

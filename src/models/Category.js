@@ -1,6 +1,6 @@
-const { model, schema } = require('mongoose');
+const { model, Schema } = require('mongoose');
 
-const categorySchema = schema({
+const categorySchema = Schema({
   name: {
     type: String,
     required: true,
@@ -16,12 +16,12 @@ const categorySchema = schema({
     required: true,
   },
   parent: {
-    type: schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Category',
   },
   ancestors: [
     {
-      type: schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Category',
     },
   ],
