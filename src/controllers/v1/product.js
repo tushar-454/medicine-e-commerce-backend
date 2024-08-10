@@ -84,4 +84,31 @@ const updateProducts = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createProduct, getProducts, updateProducts };
+const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { isHard } = req.body;
+    if (isHard) {
+      await Product.findOneAndDelete({ _id: id });
+      return res.status(204).json({
+        status: 204,
+        message: 'Product deleted successfully',
+      });
+    }
+    await Product.findOneAndUpdate({ _id: id }, { isDeleted: true }, { new: true });
+    return res.status(200).json({
+      status: 200,
+      message: 'Product deleted successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = {
+  createProduct,
+  getProducts,
+  updateProducts,
+  deleteProduct,
+};
