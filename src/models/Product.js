@@ -1,6 +1,6 @@
-const { model, schema } = require('mongoose');
+const { model, Schema } = require('mongoose');
 
-const productSchema = schema({
+const productSchema = Schema({
   name: {
     type: String,
     required: true,
@@ -31,8 +31,7 @@ const productSchema = schema({
     },
   ],
   category: {
-    type: schema.Types.ObjectId,
-    ref: 'Category',
+    type: String,
     required: true,
   },
   quantity: {

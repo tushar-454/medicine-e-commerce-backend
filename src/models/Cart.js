@@ -1,13 +1,13 @@
-const { model, schema } = require('mongoose');
+const { model, Schema } = require('mongoose');
 
-const cartSchema = schema({
+const cartSchema = Schema({
   user: {
-    type: schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
   product: {
-    type: schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Product',
     required: true,
   },
