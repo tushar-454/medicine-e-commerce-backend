@@ -25,7 +25,7 @@ const createProduct = async (req, res, next) => {
 
 const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find({ isDeleted: false });
     res.status(200).json({
       status: 200,
       products,
@@ -36,4 +36,52 @@ const getProducts = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createProduct, getProducts };
+const updateProducts = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      description,
+      photo,
+      discount,
+      variants,
+      category,
+      quantity,
+      isFeatured,
+      isSpecial,
+      isPopular,
+      isTrending,
+      isDiscounted,
+      isDeleted,
+    } = req.body;
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: id },
+      {
+        name,
+        description,
+        photo,
+        discount,
+        variants,
+        category,
+        quantity,
+        isFeatured,
+        isSpecial,
+        isPopular,
+        isTrending,
+        isDiscounted,
+        isDeleted,
+      },
+      { new: true },
+    );
+    return res.status(200).json({
+      status: 200,
+      message: 'Product updated successfully',
+      updatedProduct,
+    });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { createProduct, getProducts, updateProducts };
