@@ -6,12 +6,16 @@ const emailVerifyUserSchema = new Schema({
     required: true,
   },
   verificationCode: {
-    type: String,
+    type: Number,
     required: true,
   },
   isVerified: {
     type: Boolean,
     default: false,
+  },
+  createdAt: {
+    type: Number,
+    default: 0,
   },
 });
 

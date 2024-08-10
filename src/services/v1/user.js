@@ -1,5 +1,5 @@
-const EmailVerifyUser = require('../models/EmailVerifyUser');
-const User = require('../models/User');
+const EmailVerifyUser = require('../../models/EmailVerifyUser');
+const User = require('../../models/User');
 // common services for user
 const getUserByProperty = async (property, value, collection) => {
   if (collection === 'User') {

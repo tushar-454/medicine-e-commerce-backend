@@ -15,7 +15,9 @@
     "func-names": "off",
     "no-process-exit": "off",
     "object-shorthand": "warn",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "no-extraneous-dependencies": "off",
+    "operator-linebreak": "off"
   },
   "plugins": ["prettier"]
 }

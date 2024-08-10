@@ -1,17 +1,12 @@
-const { getUserByProperty, createUser } = require('../services/user');
+const { getUserByProperty, createUser } = require('../../services/v1/user');
 
 const createNewUser = async (req, res, next) => {
   try {
     const { name, email, password, photo } = req.body;
     // check is user completed email verification
     const user = await getUserByProperty('email', email, 'EmailVerifyUser');
-    if (!user) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Email not found in our database',
-      });
-    }
-    if (user.verificationCode === '') {
+
+    if (!user || user.verificationCode === '') {
       return res.status(400).json({
         status: 400,
         error: 'Send verification code on email first',
@@ -20,7 +15,7 @@ const createNewUser = async (req, res, next) => {
     if (user.isVerified === false) {
       return res.status(400).json({
         status: 401,
-        error: 'Verify email. Email not verified',
+        error: 'Verification Code send your mail, verify now.',
       });
     }
     // now create a user if email is verified
