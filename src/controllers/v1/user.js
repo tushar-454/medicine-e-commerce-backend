@@ -95,6 +95,32 @@ const deleteUserByEmail = async (req, res, next) => {
 
 // _____________________________________________________________________________
 /**
+ * super - admin controller
+ */
+
+const superAdminUpdateUserByEmail = async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const { role } = req.body;
+    if (role !== 'admin' && role !== 'user' && role !== 'super-admin') {
+      return res.status(400).json({ status: 400, error: 'Invalid role' });
+    }
+    const user = await getUserByProperty('email', email, 'User');
+    if (!user) {
+      return res.status(404).json({ status: 404, error: 'User not found' });
+    }
+    const updatedUser = await User.findOneAndUpdate({ email }, { role }, { new: true });
+    const userWithoutPassword = updatedUser.toObject();
+    delete userWithoutPassword.password;
+    return res.status(200).json({ status: 200, user: userWithoutPassword });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+// _____________________________________________________________________________
+/**
  * admin controller
  */
 
@@ -113,5 +139,6 @@ module.exports = {
   getUserByEmail,
   updateUserByEmail,
   deleteUserByEmail,
+  superAdminUpdateUserByEmail,
   getAdminAllUsers,
 };
