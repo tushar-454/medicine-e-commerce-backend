@@ -44,7 +44,7 @@ const createNewUser = async (req, res, next) => {
 const getUserByEmail = async (req, res, next) => {
   try {
     const { email } = req.params;
-    const user = await User.find({ email }).select({ password: 0 });
+    const user = await User.findOne({ email }).select({ password: 0 });
     if (!user) {
       return res.status(404).json({ status: 404, error: 'User not found' });
     }
@@ -79,4 +79,18 @@ const updateUserByEmail = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createNewUser, getUserByEmail, updateUserByEmail };
+const deleteUserByEmail = async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOneAndDelete({ email });
+    if (!user) {
+      return res.status(404).json({ status: 404, error: 'User not found' });
+    }
+    return res.status(204).json({ status: 204, message: 'User deleted' });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { createNewUser, getUserByEmail, updateUserByEmail, deleteUserByEmail };
