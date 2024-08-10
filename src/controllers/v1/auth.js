@@ -47,4 +47,16 @@ const createToken = async (req, res, next) => {
   return null;
 };
 
-module.exports = { loginUser, createToken };
+const deleteToken = async (req, res, next) => {
+  try {
+    return res.status(204).clearCookie('refreshToken').json({
+      status: 204,
+      message: 'Token deleted successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { loginUser, createToken, deleteToken };
