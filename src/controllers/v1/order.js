@@ -34,4 +34,52 @@ const getOrders = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createOrder, getOrders };
+const userUpdateOrder = async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const { isCanceled, isRefunded, isReturned } = req.body;
+    const orderOne = await Order.findOne({ _id: orderId });
+    if (!orderOne) {
+      return res.status(404).json({ status: 404, message: 'Order not found' });
+    }
+
+    if (orderOne.discontinued) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "Order is discontinued. You can't modified it" });
+    }
+    const order = await Order.findOneAndUpdate(
+      { _id: orderId },
+      { isCanceled, isRefunded, isReturned },
+      { new: true },
+    );
+    if (!order) {
+      return res.status(404).json({ status: 404, message: 'Order not found' });
+    }
+    return res.status(200).json({ status: 200, message: 'Order updated successfully', order });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+const adminUpdateOrder = async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    const { orderStatus, isPaid, isDelivered, discontinued, isDeleted } = req.body;
+    const order = await Order.findOneAndUpdate(
+      { _id: orderId },
+      { orderStatus, isPaid, isDelivered, discontinued, isDeleted },
+      { new: true },
+    );
+    if (!order) {
+      return res.status(404).json({ status: 404, message: 'Order not found' });
+    }
+    return res.status(200).json({ status: 200, message: 'Order updated successfully', order });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { createOrder, getOrders, userUpdateOrder, adminUpdateOrder };

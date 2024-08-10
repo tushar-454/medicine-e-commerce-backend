@@ -98,6 +98,10 @@ const orderSchema = Schema({
     type: Boolean,
     default: false,
   },
+  discontinued: {
+    type: Boolean,
+    default: false,
+  },
   isDeleted: {
     type: Boolean,
     default: false,
