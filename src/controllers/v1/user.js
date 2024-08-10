@@ -93,4 +93,25 @@ const deleteUserByEmail = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createNewUser, getUserByEmail, updateUserByEmail, deleteUserByEmail };
+// _____________________________________________________________________________
+/**
+ * admin controller
+ */
+
+const getAdminAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find().select({ password: 0 });
+    return res.status(200).json({ status: 200, users });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = {
+  createNewUser,
+  getUserByEmail,
+  updateUserByEmail,
+  deleteUserByEmail,
+  getAdminAllUsers,
+};
