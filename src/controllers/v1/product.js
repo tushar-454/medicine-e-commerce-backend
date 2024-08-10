@@ -23,4 +23,17 @@ const createProduct = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createProduct };
+const getProducts = async (req, res, next) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json({
+      status: 200,
+      products,
+    });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { createProduct, getProducts };
