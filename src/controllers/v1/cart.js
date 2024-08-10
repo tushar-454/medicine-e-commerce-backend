@@ -22,4 +22,27 @@ const getCarts = async (req, res, next) => {
   return null;
 };
 
-module.exports = { createCart, getCarts };
+const updateCart = async (req, res, next) => {
+  try {
+    const { cartId } = req.params;
+    const { quantity, varient } = req.body;
+    const cart = await Cart.findByIdAndUpdate(cartId, { quantity, varient }, { new: true });
+    return res.status(200).json({ status: 200, message: 'Cart updated successfully', cart });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+const deleteCart = async (req, res, next) => {
+  try {
+    const { cartId } = req.params;
+    await Cart.findByIdAndDelete(cartId);
+    return res.status(204).json({ status: 204, message: 'Cart deleted successfully' });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
+module.exports = { createCart, getCarts, updateCart, deleteCart };
