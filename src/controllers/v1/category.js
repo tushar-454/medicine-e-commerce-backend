@@ -34,7 +34,7 @@ const getCategories = async (req, res, next) => {
     const categories = await getCategoryWithSubcategories(null, 3);
 
     // Respond with the categories
-    res.status(200).json(categories);
+    res.status(200).json({ status: 200, categories });
   } catch (error) {
     next(error);
   }
