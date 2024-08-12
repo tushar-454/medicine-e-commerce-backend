@@ -62,15 +62,14 @@ const verifyCode = async (req, res, next) => {
     ) {
       user.isVerified = false;
       await user.save();
-      return res.status(200).json({ status: 200, message: 'Time expire!' });
+      return res.status(200).json({ status: 400, message: 'Time expire!' });
     }
     if (user && user.verificationCode === parseInt(code, 10)) {
       user.isVerified = true;
       await user.save();
       return res.status(200).json({ status: 200, message: 'Email verified successfully' });
-    } else {
-      return res.status(400).json({ status: 400, message: 'Invalid code' });
     }
+    return res.status(400).json({ status: 400, message: 'Invalid code' });
   } catch (error) {
     next(error);
   }
