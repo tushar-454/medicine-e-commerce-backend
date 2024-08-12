@@ -25,7 +25,27 @@ const createProduct = async (req, res, next) => {
 
 const getProducts = async (req, res, next) => {
   try {
+    const { category } = req.query;
+    if (category) {
+      const products = await Product.find({ category, isDeleted: false });
+      return res.status(200).json({
+        status: 200,
+        products,
+      });
+    }
     const products = await Product.find({ isDeleted: false });
+    res.status(200).json({
+      status: 200,
+      products,
+    });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+const getAdminProducts = async (req, res, next) => {
+  try {
+    const products = await Product.find();
     res.status(200).json({
       status: 200,
       products,
@@ -111,4 +131,5 @@ module.exports = {
   getProducts,
   updateProducts,
   deleteProduct,
+  getAdminProducts,
 };
