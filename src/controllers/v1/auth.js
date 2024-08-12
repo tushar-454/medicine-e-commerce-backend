@@ -25,7 +25,7 @@ const loginUser = async (req, res, next) => {
 const createToken = async (req, res, next) => {
   try {
     const { email, role } = req.body;
-    const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, {
+    const accessToken = jwt.sign({ email, role }, process.env.JWT_SECRET, {
       expiresIn: parseInt(process.env.JWT_ACCESS_EXPIRATION, 10),
     });
 
@@ -38,9 +38,7 @@ const createToken = async (req, res, next) => {
     return res.status(201).json({
       status: 201,
       message: 'Token generated successfully',
-      token: {
-        accessToken,
-      },
+      accessToken,
     });
   } catch (error) {
     next(error);
