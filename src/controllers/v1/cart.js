@@ -26,6 +26,9 @@ const updateCart = async (req, res, next) => {
   try {
     const { cartId } = req.params;
     const { quantity, varient } = req.body;
+    if (quantity <= 0) {
+      return res.status(400).json({ status: 400, message: 'Quantity must be greater than 0' });
+    }
     const cart = await Cart.findByIdAndUpdate(cartId, { quantity, varient }, { new: true });
     return res.status(200).json({ status: 200, message: 'Cart updated successfully', cart });
   } catch (error) {
