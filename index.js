@@ -44,3 +44,5 @@ mongoose
   .catch((e) => {
     console.log(e);
   });
+
+module.exports = app;
