@@ -14,7 +14,7 @@ const logger = require('./src/middleware/logger');
 app.use('/public', express.static('public'));
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ['https://healthifyrx.vercel.app', 'http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   }),
