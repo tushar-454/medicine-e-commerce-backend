@@ -1,3 +1,4 @@
+const Cart = require('../../models/Cart');
 const Product = require('../../models/Product');
 
 const createProduct = async (req, res, next) => {
@@ -26,17 +27,34 @@ const createProduct = async (req, res, next) => {
 const getProducts = async (req, res, next) => {
   try {
     const { category } = req.query;
+    const { user } = req.body;
     if (category) {
-      const products = await Product.find({ category, isDeleted: false });
+      const products = await Product.find({ category, isDeleted: false }).lean();
+      const carts = await Cart.find({ user }).lean();
+      const newProducts = products.map((product) => {
+        const isCarted = carts.find((cart) => cart.product.toString() === product._id.toString());
+        if (isCarted) {
+          return { ...product, isCarted: true };
+        }
+        return { ...product, isCarted: false };
+      });
       return res.status(200).json({
         status: 200,
-        products,
+        products: newProducts,
       });
     }
-    const products = await Product.find({ isDeleted: false });
+    const products = await Product.find({ isDeleted: false }).lean();
+    const carts = await Cart.find({ user }).lean();
+    const newProducts = products.map((product) => {
+      const isCarted = carts.find((cart) => cart.product.toString() === product._id.toString());
+      if (isCarted) {
+        return { ...product, isCarted: true };
+      }
+      return { ...product, isCarted: false };
+    });
     res.status(200).json({
       status: 200,
-      products,
+      products: newProducts,
     });
   } catch (error) {
     next(error);

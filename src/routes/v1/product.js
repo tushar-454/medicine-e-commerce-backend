@@ -7,7 +7,7 @@ const {
 } = require('../../controllers/v1/product');
 
 router.post('/create', createProduct);
-router.get('/', getProducts);
+router.post('/', getProducts);
 router.put('/:id', updateProducts);
 router.delete('/:id', deleteProduct);
 
