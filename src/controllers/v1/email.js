@@ -55,15 +55,15 @@ const verifyCode = async (req, res, next) => {
     const user = await EmailVerifyUser.findOne({ email });
 
     // Check if the user exists and the verification code matches
-    if (
-      user &&
-      user.verificationCode === parseInt(code, 10) &&
-      Date.now() - user.createdAt > 60000
-    ) {
-      user.isVerified = false;
-      await user.save();
-      return res.status(200).json({ status: 400, message: 'Time expire!' });
-    }
+    // if (
+    //   user &&
+    //   user.verificationCode === parseInt(code, 10) &&
+    //   Date.now() - user.createdAt > 60000
+    // ) {
+    //   user.isVerified = false;
+    //   await user.save();
+    //   return res.status(200).json({ status: 400, message: 'Time expire!' });
+    // }
     if (user && user.verificationCode === parseInt(code, 10)) {
       user.isVerified = true;
       await user.save();
