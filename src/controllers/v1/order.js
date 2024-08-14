@@ -37,7 +37,7 @@ const getOrders = async (req, res, next) => {
 const userUpdateOrder = async (req, res, next) => {
   try {
     const { orderId } = req.params;
-    const { isCanceled, isRefunded, isReturned } = req.body;
+    const { isCanceled, isRefunded, isReturned, orderStatus } = req.body;
     const orderOne = await Order.findOne({ _id: orderId });
     if (!orderOne) {
       return res.status(404).json({ status: 404, message: 'Order not found' });
@@ -48,9 +48,15 @@ const userUpdateOrder = async (req, res, next) => {
         .status(400)
         .json({ status: 400, message: "Order is discontinued. You can't modified it" });
     }
+    if (orderStatus !== 'pending' && orderStatus !== 'canceled') {
+      return res.status(400).json({
+        status: 400,
+        message: 'You can only update order status to pending or canceled',
+      });
+    }
     const order = await Order.findOneAndUpdate(
       { _id: orderId },
-      { isCanceled, isRefunded, isReturned },
+      { isCanceled, isRefunded, isReturned, orderStatus },
       { new: true },
     );
     if (!order) {
