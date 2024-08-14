@@ -29,7 +29,7 @@ const userSchema = Schema({
     type: String,
     default: 'division',
   },
-  distric: {
+  district: {
     type: String,
     default: 'district',
   },
