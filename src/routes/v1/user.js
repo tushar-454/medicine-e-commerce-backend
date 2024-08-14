@@ -5,10 +5,11 @@ const {
   updateUserByEmail,
   deleteUserByEmail,
 } = require('../../controllers/v1/user');
+const verifyToken = require('../../middleware/verifyToken');
 
 router.post('/create', createNewUser);
-router.get('/:email', getUserByEmail);
-router.put('/:email', updateUserByEmail);
-router.delete('/:email', deleteUserByEmail);
+router.get('/:email', verifyToken, getUserByEmail);
+router.put('/:email', verifyToken, updateUserByEmail);
+router.delete('/:email', verifyToken, deleteUserByEmail);
 
 module.exports = router;

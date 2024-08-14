@@ -5,10 +5,11 @@ const {
   updateProducts,
   deleteProduct,
 } = require('../../controllers/v1/product');
+const verifyToken = require('../../middleware/verifyToken');
 
-router.post('/create', createProduct);
+router.post('/create', verifyToken, createProduct);
 router.post('/', getProducts);
-router.put('/:id', updateProducts);
-router.delete('/:id', deleteProduct);
+router.put('/:id', verifyToken, updateProducts);
+router.delete('/:id', verifyToken, deleteProduct);
 
 module.exports = router;

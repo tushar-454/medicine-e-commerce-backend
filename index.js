@@ -16,6 +16,7 @@ app.use(
   cors({
     origin: ['https://healthifyrx.vercel.app', 'http://localhost:3000'],
     credentials: true,
+    exposedHeaders: ['Authorization'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   }),
 );
