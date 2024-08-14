@@ -98,6 +98,17 @@ const deleteUserByEmail = async (req, res, next) => {
  * super - admin controller
  */
 
+const getSuperAdminAllUsers = async (req, res, next) => {
+  try {
+    // find all user without super admin role and sort add admin first
+    const users = await User.find({ role: { $ne: 'super-admin' } }).select({ password: 0 });
+    return res.status(200).json({ status: 200, users });
+  } catch (error) {
+    next(error);
+  }
+  return null;
+};
+
 const superAdminUpdateUserByEmail = async (req, res, next) => {
   try {
     const { email } = req.params;
@@ -140,7 +151,7 @@ const superAdmindeleteUserByEmail = async (req, res, next) => {
 
 const getAdminAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find().select({ password: 0 });
+    const users = await User.find({ role: 'user' }).select({ password: 0 });
     return res.status(200).json({ status: 200, users });
   } catch (error) {
     next(error);
@@ -156,4 +167,5 @@ module.exports = {
   superAdminUpdateUserByEmail,
   getAdminAllUsers,
   superAdmindeleteUserByEmail,
+  getSuperAdminAllUsers,
 };

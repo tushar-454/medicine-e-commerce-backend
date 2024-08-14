@@ -64,10 +64,10 @@ const orderSchema = Schema({
       required: true,
     },
   },
-  // phone: {
-  //   type: String,
-  //   required: true,
-  // },
+  phone: {
+    type: String,
+    required: true,
+  },
   paymentStatus: {
     type: String,
     enum: ['paid', 'unpaid', 'pending'],
