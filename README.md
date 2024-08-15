@@ -32,7 +32,7 @@ Ensure that the version displayed is 20 or higher. If you don't have Node.js ins
 3. Clone the repository to your local machine:
 
 ```bash
-https://github.com/tushar-454/medicine-e-commerce-backend.git
+ git clone -b local --single-branch https://github.com/tushar-454/medicine-e-commerce-backend.git
 ```
 
 4. Navigate to the project directory:
