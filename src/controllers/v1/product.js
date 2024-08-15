@@ -144,10 +144,26 @@ const deleteProduct = async (req, res, next) => {
   return null;
 };
 
+const getProductById = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const product = await Product.findOne({ _id: productId, isDeleted: false });
+    const relatedProduct = await Product.find({ category: product.category }).limit(4);
+    res.status(200).json({
+      status: 200,
+      product,
+      relatedProduct,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createProduct,
   getProducts,
   updateProducts,
   deleteProduct,
   getAdminProducts,
+  getProductById,
 };
