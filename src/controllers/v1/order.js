@@ -90,6 +90,37 @@ const adminUpdateOrder = async (req, res, next) => {
 
 const getAdminOrders = async (req, res, next) => {
   try {
+    //  I want to filter order by orderStatus and sort by date
+
+    const { orderStatus, createdAt } = req.query;
+
+    if (orderStatus && createdAt) {
+      const orders = await Order.find({ orderStatus })
+        .sort({ createdAt: parseInt(createdAt, 10) })
+        .populate('user', 'name photo email')
+        .populate('products.product', 'name photo');
+      return res
+        .status(200)
+        .json({ status: 200, message: 'Orders retrieved successfully', orders });
+    }
+    if (orderStatus) {
+      const orders = await Order.find({ orderStatus })
+        .populate('user', 'name photo email')
+        .populate('products.product', 'name photo');
+      return res
+        .status(200)
+        .json({ status: 200, message: 'Orders retrieved successfully', orders });
+    }
+    if (createdAt) {
+      const orders = await Order.find()
+        .sort({ createdAt: parseInt(createdAt, 10) })
+        .populate('user', 'name photo email')
+        .populate('products.product', 'name photo');
+      return res
+        .status(200)
+        .json({ status: 200, message: 'Orders retrieved successfully', orders });
+    }
+
     const orders = await Order.find()
       .populate('user', 'name photo email')
       .populate('products.product', 'name photo');
