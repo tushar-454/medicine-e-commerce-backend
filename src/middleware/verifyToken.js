@@ -35,7 +35,6 @@ const verifyToken = (req, res, next) => {
                 process.env.JWT_SECRET,
                 { expiresIn: parseInt(process.env.JWT_ACCESS_EXPIRATION, 10) },
               );
-              console.log('New access token:');
               res.setHeader('Authorization', `Bearer ${newAccessToken}`);
               req.user = decodedRefreshToken.email;
               req.role = decodedRefreshToken.role;
